@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Departamento</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Editar Departamento</h2>
+        <form th:action="@{/departamento/editar/{id}(id=${departamento.id})}" method="post">
+            <input type="hidden" name="id" th:value="${departamento.id}">
+            <div class="mb-3">
+                <label class="form-label">Código del Departamento</label>
+                <input type="text" class="form-control" name="departamentoCodigo" th:value="${departamento.departamentoCodigo}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nombre del Departamento</label>
+                <input type="text" class="form-control" name="departamentoNombre" th:value="${departamento.departamentoNombre}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <a th:href="@{/departamento/listar}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

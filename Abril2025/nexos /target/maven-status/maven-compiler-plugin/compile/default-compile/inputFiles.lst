@@ -1,0 +1,9 @@
+/home/fabrica/Documentos/GitHub/Abril2025/nexos /src/main/java/com/nexos/NexosApplication.java
+/home/fabrica/Documentos/GitHub/Abril2025/nexos /src/main/java/com/nexos/controller/DepartamentoControlador.java
+/home/fabrica/Documentos/GitHub/Abril2025/nexos /src/main/java/com/nexos/controller/EmpleadoControlador.java
+/home/fabrica/Documentos/GitHub/Abril2025/nexos /src/main/java/com/nexos/modelos/Departamento.java
+/home/fabrica/Documentos/GitHub/Abril2025/nexos /src/main/java/com/nexos/modelos/Empleado.java
+/home/fabrica/Documentos/GitHub/Abril2025/nexos /src/main/java/com/nexos/repositorio/DepartamentoRepositorio.java
+/home/fabrica/Documentos/GitHub/Abril2025/nexos /src/main/java/com/nexos/repositorio/EmpleadoRepositorio.java
+/home/fabrica/Documentos/GitHub/Abril2025/nexos /src/main/java/com/nexos/servicio/DepartamentoServicio.java
+/home/fabrica/Documentos/GitHub/Abril2025/nexos /src/main/java/com/nexos/servicio/EmpleadoServicio.java

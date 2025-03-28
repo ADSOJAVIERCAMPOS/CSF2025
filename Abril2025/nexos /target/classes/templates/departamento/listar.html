@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Departamentos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Lista de Departamentos</h2>
+
+        <div>
+
+            <a href="/" class"btn btn-danger mb-3">Volver</a>
+        
+            <a th:href="@{/departamento/crear}" class="btn btn-success mb-3">Crear Departamento</a>
+
+        </div>
+        
+
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Fecha Creación</th>
+                    <th>Fecha Modificación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="departamento : ${departamentos}">
+                    <td th:text="${departamento.id}"></td>
+                    <td th:text="${departamento.departamentoCodigo}"></td>
+                    <td th:text="${departamento.departamentoNombre}"></td>
+                    <td th:text="${#temporals.format(departamento.fechaHoraCrea, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                    <td th:text="${#temporals.format(departamento.fechaHoraModifica, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                    <td>
+                        <a th:href="@{/departamento/editar/{id}(id=${departamento.id})}" class="btn btn-warning">Editar</a>
+                        <a th:href="@{/departamento/eliminar/{id}(id=${departamento.id})}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
