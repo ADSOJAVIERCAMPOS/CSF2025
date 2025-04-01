@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nexos.modelos.Departamento;
+import com.nexos.repositorio.DepartamentoRepositorio;
 import com.nexos.servicio.DepartamentoServicio;
+
 
 @Controller
 @RequestMapping("/departamento")
@@ -22,6 +24,12 @@ public class DepartamentoControlador {
 
     @Autowired
     private DepartamentoServicio departamentoServicio;
+
+    @Autowired
+    private DepartamentoRepositorio departamentoRepositorio;
+
+    public DepartamentoControlador() {
+    }
 
     // Listar todos los departamentos
     @GetMapping("/listar")
@@ -74,4 +82,31 @@ public class DepartamentoControlador {
         departamentoServicio.eliminar(id);
         return "redirect:/departamento/listar";
     }
+
+     public DepartamentoRepositorio getDepartamentoRepositorio() {
+        return departamentoRepositorio;
+    }
+
+    public void setDepartamentoRepositorio(DepartamentoRepositorio departamentoRepositorio) {
+        this.departamentoRepositorio = departamentoRepositorio;
+    }
+
+    public DepartamentoServicio getDepartamentoServicio() {
+        return departamentoServicio;
+    }
+
+    public void setDepartamentoServicio(DepartamentoServicio departamentoServicio) {
+        this.departamentoServicio = departamentoServicio;
+    }
+
+    private static class departamentoRepositorio {
+
+        private static Optional<Departamento> findById(Long id) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public departamentoRepositorio() {
+        }
+    }
 }
+
