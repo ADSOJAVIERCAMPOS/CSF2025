@@ -129,5 +129,14 @@ public class Empleado {
 
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
+
+        public Object getCargo() {
+        
+        throw new UnsupportedOperationException("Unimplemented method 'getCargo'");
+    }
+
+    public void setCargo(Object cargo) {
+        
+        throw new UnsupportedOperationException("Unimplemented method 'setCargo'");
     }
 }
