@@ -31,21 +31,22 @@
                 <th>Teléfono</th>
                 <th>Acciones</th>
             </tr>
+            <tbody>
+                <tr th:each="empleado : ${empleados}">
+                    <td th:text="${empleado.id}"></td>
+                    <td th:text="${empleado.documentoNumero}"></td>
+                    <td th:text="${empleado.nombres}"></td>
+                    <td th:text="${empleado.departamento}"></td>
+                    <td th:text="${empleado.correoElectronico}"></td>
+                    <td th:text="${empleado.telefono}"></td>
+                    <td>
+                        <a th:href="@{/empleados/editar/{id}(id=${empleado.id})}" class="btn btn-warning">Editar</a>
+                        <a th:href="@{/empleados/eliminar/{id}(id=${empleado.id})}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
         </thead>
-        <tbody>
-            <tr th:each="empleado : ${empleados}">
-                <td th:text="${empleado.id}"></td>
-                <td th:text="${empleado.documentoTipo} + ' ' + ${empleado.documentoNumero}"></td>
-                <td th:text="${empleado.nombres} + ' ' + ${empleado.apellidos}"></td>
-                <td th:text="${empleado.departamento.nombre}"></td>
-                <td th:text="${empleado.correoElectronico}"></td>
-                <td th:text="${empleado.telefono}"></td>
-                <td>
-                    <a th:href="@{/empleados/editar/{id}(id=${empleado.id})}" class="btn btn-warning btn-sm">Editar</a>
-                    <a th:href="@{/empleados/eliminar/{id}(id=${empleado.id})}" class="btn btn-danger btn-sm">Eliminar</a>
-                </td>
-            </tr>
-        </tbody>
+
     </table>
 </div>
 
