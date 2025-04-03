@@ -1,83 +1,55 @@
 package com.nexos.modelos;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "empleados")
-public class Empleado {
+@Table(name = "departamentos")
+public class Departamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 10)
-    private String documentoTipo; // RC, TI, CC, CE
+    @Column(name = "departamento_codigo", nullable = false, unique = true, length = 50)
+    private String departamentoCodigo;
 
-    @Column(nullable = false, unique = true, length = 20)
-    private String documentoNumero;
+    @Column(name = "departamento_nombre", nullable = false, length = 100)
+    private String departamentoNombre;
 
-    @Column(nullable = false, length = 50)
-    private String nombres;
-
-    @Column(nullable = false, length = 50)
-    private String apellidos;
-
-    @ManyToOne
-    @JoinColumn(name = "departamento_id", nullable = false)
-    private Departamento departamento;
-
-    @Column(nullable = false, length = 50)
-    private String ciudad;
-
-    @Column(nullable = false, length = 100)
-    private String direccion;
-
-    @Column(nullable = false, length = 100)
-    private String correoElectronico;
-
-    @Column(nullable = false, length = 20)
-    private String telefono;
-
-    @Column(nullable = false, updatable = false)
+    @Column(name = "fecha_hora_crea", updatable = false, nullable = false)
     private LocalDateTime fechaHoraCrea;
 
-    @Column(nullable = false)
+    @Column(name = "fecha_hora_modifica")
     private LocalDateTime fechaHoraModifica;
 
-    // Constructor vacío
-    public Empleado() {}
+    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Empleado> empleados;
 
-    // Constructor con parámetros
-    public Empleado(String documentoTipo, String documentoNumero, String nombres, String apellidos,
-                    Departamento departamento, String ciudad, String direccion,
-                    String correoElectronico, String telefono) {
-        this.documentoTipo = documentoTipo;
-        this.documentoNumero = documentoNumero;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.departamento = departamento;
-        this.ciudad = ciudad;
-        this.direccion = direccion;
-        this.correoElectronico = correoElectronico;
-        this.telefono = telefono;
-        this.fechaHoraCrea = LocalDateTime.now();
-        this.fechaHoraModifica = LocalDateTime.now();
+    // 🔹 Constructores
+    public Departamento() {
+        this.fechaHoraCrea = LocalDateTime.now(); // Inicializa la fecha de creación
     }
 
-    // Métodos para inicializar fechas antes de guardar en la BD
-    @PrePersist
-    protected void onCreate() {
-        this.fechaHoraCrea = LocalDateTime.now();
-        this.fechaHoraModifica = LocalDateTime.now();
+    public Departamento(String departamentoCodigo, String departamentoNombre) {
+        this.departamentoCodigo = departamentoCodigo;
+        this.departamentoNombre = departamentoNombre;
+        this.fechaHoraCrea = LocalDateTime.now(); // Asegura que la fecha se establezca al crear un objeto
     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        this.fechaHoraModifica = LocalDateTime.now();
-    }
-
-    // Getters y Setters
+    // 🔹 Getters y Setters
     public Long getId() {
         return id;
     }
@@ -86,76 +58,20 @@ public class Empleado {
         this.id = id;
     }
 
-    public String getDocumentoTipo() {
-        return documentoTipo;
+    public String getDepartamentoCodigo() {
+        return departamentoCodigo;
     }
 
-    public void setDocumentoTipo(String documentoTipo) {
-        this.documentoTipo = documentoTipo;
+    public void setDepartamentoCodigo(String departamentoCodigo) {
+        this.departamentoCodigo = departamentoCodigo;
     }
 
-    public String getDocumentoNumero() {
-        return documentoNumero;
+    public String getDepartamentoNombre() {
+        return departamentoNombre;
     }
 
-    public void setDocumentoNumero(String documentoNumero) {
-        this.documentoNumero = documentoNumero;
-    }
-
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setDepartamentoNombre(String departamentoNombre) {
+        this.departamentoNombre = departamentoNombre;
     }
 
     public LocalDateTime getFechaHoraCrea() {
@@ -173,6 +89,28 @@ public class Empleado {
     public void setFechaHoraModifica(LocalDateTime fechaHoraModifica) {
         this.fechaHoraModifica = fechaHoraModifica;
     }
+
+    public List<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(List<Empleado> empleados) {
+        this.empleados = empleados;
+    }
+
+    // 🔹 Métodos automáticos de persistencia
+    @PrePersist
+    protected void prePersist() {
+        if (this.fechaHoraCrea == null) {
+            this.fechaHoraCrea = LocalDateTime.now();
+        }
+    }
+
+    @PreUpdate
+    protected void preUpdate() {
+        this.fechaHoraModifica = LocalDateTime.now();
+    }
 }
+
 
 
