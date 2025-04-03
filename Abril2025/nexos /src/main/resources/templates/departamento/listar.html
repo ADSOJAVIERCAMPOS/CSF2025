@@ -5,46 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Departamentos</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="text-center">Lista de Departamentos</h2>
+<div class="container mt-5">
+    <h2 class="text-center">Lista de Departamentos</h2>
 
-        <div>
-
-            <a href="/" class"btn btn-danger mb-3">Volver</a>
-        
-            <a th:href="@{/departamento/crear}" class="btn btn-success mb-3">Crear Departamento</a>
-
-        </div>
-        
-
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Fecha Creación</th>
-                    <th>Fecha Modificación</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="departamento : ${departamentos}">
-                    <td th:text="${departamento.id}"></td>
-                    <td th:text="${departamento.departamentoCodigo}"></td>
-                    <td th:text="${departamento.departamentoNombre}"></td>
-                    <td th:text="${#temporals.format(departamento.fechaHoraCrea, 'dd/MM/yyyy HH:mm:ss')}"></td>
-                    <td th:text="${#temporals.format(departamento.fechaHoraModifica, 'dd/MM/yyyy HH:mm:ss')}"></td>
-                    <td>
-                        <a th:href="@{/departamento/editar/{id}(id=${departamento.id})}" class="btn btn-warning">Editar</a>
-                        <a th:href="@{/departamento/eliminar/{id}(id=${departamento.id})}" class="btn btn-danger">Eliminar</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="mb-3">
+        <a href="/" class="btn btn-danger">Volver</a>
+        <a th:href="@{/departamento/crear}" class="btn btn-success">Crear Departamento</a>
     </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Fecha Creación</th>
+            <th>Fecha Modificación</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="departamento : ${departamentos}">
+            <td th:text="${departamento.id}"></td>
+            <td th:text="${departamento.departamentoCodigo}"></td>
+            <td th:text="${departamento.departamentoNombre}"></td>
+            <td th:text="${#temporals.format(departamento.fechaHoraCrea, 'dd/MM/yyyy HH:mm:ss')}"></td>
+            <td th:text="${#temporals.format(departamento.fechaHoraModifica, 'dd/MM/yyyy HH:mm:ss')}"></td>
+            <td>
+                <a th:href="@{/departamento/editar/{id}(id=${departamento.id})}" class="btn btn-warning">Editar</a>
+                <button th:data-id="${departamento.id}" onclick="confirmarEliminacion(this)" class="btn btn-danger">Eliminar</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function confirmarEliminacion(button) {
+        let departamentoId = button.getAttribute("data-id");
+
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "No podrás revertir esta acción",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/departamento/eliminar/" + departamentoId;
+            }
+        });
+    }
+</script>
 </body>
 </html>
+
