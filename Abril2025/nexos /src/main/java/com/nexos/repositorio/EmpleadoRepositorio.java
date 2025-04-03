@@ -12,7 +12,7 @@ import com.nexos.modelos.Empleado;
 @Repository
 public interface EmpleadoRepositorio extends JpaRepository<Empleado, Long> {
 
-      @Override
+    @Override
     List<Empleado> findAll();
 
     @Override
@@ -20,5 +20,5 @@ public interface EmpleadoRepositorio extends JpaRepository<Empleado, Long> {
 
     @Override
     Empleado save(Empleado empleado);
-  
 }
+
