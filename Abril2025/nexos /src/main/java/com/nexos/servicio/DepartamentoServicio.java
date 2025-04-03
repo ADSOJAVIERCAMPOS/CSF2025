@@ -48,3 +48,4 @@ public class DepartamentoServicio {
         throw new RuntimeException("Departamento no encontrado con id: " + id);
     }
 }
+
