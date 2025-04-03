@@ -52,12 +52,14 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Departamento</label>
-            <select class="form-select" name="departamentoId">
-                <!-- Aquí se llenarán los departamentos dinámicamente -->
-                <option th:each="departamento : ${departamentos}" 
-                        th:value="${departamento.id}" 
-                        th:text="${departamento.nombre}"></option>
+            <label for="departamento">Departamento:</label>
+            <select id="departamento" name="departamento.id" required class="form-select">
+
+                <option value="">Seleccione un departamento</option>
+                <option th:each="departamento : ${departamentos}"
+                        th:value="${departamento.id}"
+                        th:text="${departamento.departamentoNombre}">
+                </option>
             </select>
         </div>
 
@@ -88,3 +90,4 @@
 
 </body>
 </html>
+
