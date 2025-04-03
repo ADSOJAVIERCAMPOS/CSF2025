@@ -23,8 +23,23 @@
 
 <div class="container">
     <h2 class="text-center">Editar Empleado</h2>
-    <form action="/empleados/actualizar" method="post">
+    <form th:action="@{/empleado/editar/{id}(id=${empleado.id})}" method="post">
         <input type="hidden" name="id" th:value="${empleado.id}">
+
+        <div class="mb-3">
+            <label class="form-label">Tipo de Documento</label>
+            <select class="form-select" name="documentoTipo">
+                <option value="RC">Registro Civil</option>
+                <option value="TI">Tarjeta de Identidad</option>
+                <option value="CC">Cédula de Ciudadanía</option>
+                <option value="CE">Cédula de Extranjería</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Número de Documento</label>
+            <input type="text" class="form-control" name="documentoNumero" th:value="${empleado.documentoNumero}" required>
+        </div>
 
         <div class="mb-3">
             <label class="form-label">Nombres</label>
@@ -38,10 +53,10 @@
 
         <div class="mb-3">
             <label class="form-label">Departamento</label>
-            <select class="form-select" name="departamentoId">
+            <select class="form-select" name="departamento.id">
                 <option th:each="departamento : ${departamentos}" 
                         th:value="${departamento.id}" 
-                        th:text="${departamento.nombre}"
+                        th:text="${departamento.departamentoNombre}"
                         th:selected="${empleado.departamento.id == departamento.id}"></option>
             </select>
         </div>
@@ -58,8 +73,9 @@
 
         <button type="submit" class="btn btn-primary w-100">Actualizar</button>
     </form>
-    <a href="/empleados" class="btn btn-secondary w-100 mt-2">Volver</a>
+    <a href="/empleado" class="btn btn-secondary w-100 mt-2">Volver</a>
 </div>
 
 </body>
 </html>
+
