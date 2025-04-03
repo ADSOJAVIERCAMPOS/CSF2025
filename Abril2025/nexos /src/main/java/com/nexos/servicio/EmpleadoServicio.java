@@ -1,14 +1,13 @@
 package com.nexos.servicio;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
+import com.nexos.modelos.Empleado;
+import com.nexos.repositorio.EmpleadoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nexos.modelos.Empleado;
-import com.nexos.repositorio.EmpleadoRepositorio;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpleadoServicio {
@@ -16,7 +15,7 @@ public class EmpleadoServicio {
     @Autowired
     private EmpleadoRepositorio empleadoRepositorio;
 
-    // Listar todos los empleados
+    // Obtener todos los empleados
     public List<Empleado> obtenerTodos() {
         return empleadoRepositorio.findAll();
     }
@@ -26,25 +25,30 @@ public class EmpleadoServicio {
         return empleadoRepositorio.findById(id);
     }
 
-    // Guardar un nuevo empleado
-    public Empleado guardar(Empleado empleado) {
+    // Guardar nuevo empleado
+    public void guardar(Empleado empleado) {
         empleado.setFechaHoraCrea(LocalDateTime.now());
         empleado.setFechaHoraModifica(LocalDateTime.now());
-        return empleadoRepositorio.save(empleado);
+        empleadoRepositorio.save(empleado);
     }
 
-    // Actualizar empleado
-    public Empleado actualizar(Long id, Empleado empleadoActualizado) {
-        return empleadoRepositorio.findById(id).map(empleado -> {
-            empleado.setNombres(empleadoActualizado.getNombres());
-            empleado.setApellidos(empleadoActualizado.getApellidos());
-            empleado.setDocumentoNumero(empleadoActualizado.getDocumentoNumero());
-            empleado.setCorreoElectronico(empleadoActualizado.getCorreoElectronico());
-            empleado.setTelefono(empleadoActualizado.getTelefono());
-            empleado.setDepartamento(empleadoActualizado.getDepartamento());
-            empleado.setFechaHoraModifica(LocalDateTime.now());
-            return empleadoRepositorio.save(empleado);
-        }).orElse(null);
+    // Actualizar empleado existente
+    public void actualizar(Long id, Empleado empleado) {
+        Optional<Empleado> empleadoExistente = empleadoRepositorio.findById(id);
+        if (empleadoExistente.isPresent()) {
+            Empleado emp = empleadoExistente.get();
+            emp.setDocumentoTipo(empleado.getDocumentoTipo());
+            emp.setDocumentoNumero(empleado.getDocumentoNumero());
+            emp.setNombres(empleado.getNombres());
+            emp.setApellidos(empleado.getApellidos());
+            emp.setDepartamento(empleado.getDepartamento());
+            emp.setCiudad(empleado.getCiudad());
+            emp.setDireccion(empleado.getDireccion());
+            emp.setCorreoElectronico(empleado.getCorreoElectronico());
+            emp.setTelefono(empleado.getTelefono());
+            emp.setFechaHoraModifica(LocalDateTime.now());
+            empleadoRepositorio.save(emp);
+        }
     }
 
     // Eliminar empleado
