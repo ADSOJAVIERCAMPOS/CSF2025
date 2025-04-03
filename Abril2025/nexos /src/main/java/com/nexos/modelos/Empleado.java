@@ -1,15 +1,7 @@
 package com.nexos.modelos;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "empleados")
@@ -19,14 +11,27 @@ public class Empleado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 10)
+    private String documentoTipo; // RC, TI, CC, CE
+
+    @Column(nullable = false, unique = true, length = 20)
+    private String documentoNumero;
+
     @Column(nullable = false, length = 50)
     private String nombres;
 
     @Column(nullable = false, length = 50)
     private String apellidos;
 
-    @Column(nullable = false, unique = true, length = 20)
-    private String documentoNumero;
+    @ManyToOne
+    @JoinColumn(name = "departamento_id", nullable = false)
+    private Departamento departamento;
+
+    @Column(nullable = false, length = 50)
+    private String ciudad;
+
+    @Column(nullable = false, length = 100)
+    private String direccion;
 
     @Column(nullable = false, length = 100)
     private String correoElectronico;
@@ -34,27 +39,41 @@ public class Empleado {
     @Column(nullable = false, length = 20)
     private String telefono;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime fechaHoraCrea;
 
     @Column(nullable = false)
     private LocalDateTime fechaHoraModifica;
 
-    @ManyToOne
-    @JoinColumn(name = "departamento_id", nullable = false)
-    private Departamento departamento;
-
-    // Constructores
+    // Constructor vacío
     public Empleado() {}
 
-    public Empleado(String nombres, String apellidos, String documentoNumero, String correoElectronico, String telefono, Departamento departamento) {
+    // Constructor con parámetros
+    public Empleado(String documentoTipo, String documentoNumero, String nombres, String apellidos,
+                    Departamento departamento, String ciudad, String direccion,
+                    String correoElectronico, String telefono) {
+        this.documentoTipo = documentoTipo;
+        this.documentoNumero = documentoNumero;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.documentoNumero = documentoNumero;
+        this.departamento = departamento;
+        this.ciudad = ciudad;
+        this.direccion = direccion;
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
-        this.departamento = departamento;
         this.fechaHoraCrea = LocalDateTime.now();
+        this.fechaHoraModifica = LocalDateTime.now();
+    }
+
+    // Métodos para inicializar fechas antes de guardar en la BD
+    @PrePersist
+    protected void onCreate() {
+        this.fechaHoraCrea = LocalDateTime.now();
+        this.fechaHoraModifica = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
         this.fechaHoraModifica = LocalDateTime.now();
     }
 
@@ -65,6 +84,22 @@ public class Empleado {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDocumentoTipo() {
+        return documentoTipo;
+    }
+
+    public void setDocumentoTipo(String documentoTipo) {
+        this.documentoTipo = documentoTipo;
+    }
+
+    public String getDocumentoNumero() {
+        return documentoNumero;
+    }
+
+    public void setDocumentoNumero(String documentoNumero) {
+        this.documentoNumero = documentoNumero;
     }
 
     public String getNombres() {
@@ -83,12 +118,28 @@ public class Empleado {
         this.apellidos = apellidos;
     }
 
-    public String getDocumentoNumero() {
-        return documentoNumero;
+    public Departamento getDepartamento() {
+        return departamento;
     }
 
-    public void setDocumentoNumero(String documentoNumero) {
-        this.documentoNumero = documentoNumero;
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getCorreoElectronico() {
@@ -122,21 +173,5 @@ public class Empleado {
     public void setFechaHoraModifica(LocalDateTime fechaHoraModifica) {
         this.fechaHoraModifica = fechaHoraModifica;
     }
-
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-
-        public Object getCargo() {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getCargo'");
-    }
-
-    public void setCargo(Object cargo) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'setCargo'");
-    }
 }
+
