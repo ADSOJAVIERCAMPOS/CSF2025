@@ -52,10 +52,13 @@ public class DepartamentoControlador {
         departamentoServicio.guardar(departamento);
         return "redirect:/departamento/listar";
     }
+
+// Mostrar formulario para editar un departamento
     // Mostrar formulario para editar un departamento
-@GetMapping("/editar/{id}")
+    @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
-        Optional<Departamento> departamento = departamentoServicio.obtenerPorId(id);
+        Optional<Departamento> departamento = departamentoRepositorio.findById(id);
+
         if (departamento.isPresent()) {
             model.addAttribute("departamento", departamento.get());
             return "departamento/editar"; // Vista editar.html en templates/departamento/
@@ -63,6 +66,7 @@ public class DepartamentoControlador {
             return "redirect:/departamento/listar";
         }
     }
+
     // Actualizar un departamento
     @PostMapping("/editar/{id}")
     public String actualizarDepartamento(@PathVariable Long id, @ModelAttribute Departamento departamento) {
@@ -76,14 +80,17 @@ public class DepartamentoControlador {
         }
         return "redirect:/departamento/listar";
     }
+
     // Eliminar un departamento
     @GetMapping("/eliminar/{id}")
     public String eliminarDepartamento(@PathVariable Long id) {
         departamentoServicio.eliminar(id);
         return "redirect:/departamento/listar";
+
+
     }
 
-     public DepartamentoRepositorio getDepartamentoRepositorio() {
+    public DepartamentoRepositorio getDepartamentoRepositorio() {
         return departamentoRepositorio;
     }
 
@@ -109,4 +116,5 @@ public class DepartamentoControlador {
         }
     }
 }
+
 
