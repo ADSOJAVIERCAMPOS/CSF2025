@@ -111,3 +111,4 @@ public class Departamento {
         this.fechaHoraModifica = LocalDateTime.now();
     }
 }
+
