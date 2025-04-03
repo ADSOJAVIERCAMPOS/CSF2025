@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nexos.modelos.Departamento;
 
-@Repository 
+@Repository
 public interface DepartamentoRepositorio extends JpaRepository<Departamento, Long> {
 
     Optional<Departamento> findByDepartamentoCodigo(String departamentoCodigo);
@@ -15,4 +15,5 @@ public interface DepartamentoRepositorio extends JpaRepository<Departamento, Lon
     Optional<Departamento> findByDepartamentoNombre(String departamentoNombre);
 
     boolean existsByDepartamentoCodigo(String departamentoCodigo);
+
 }
